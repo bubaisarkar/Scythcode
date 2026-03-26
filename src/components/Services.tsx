@@ -1,67 +1,50 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Bot, Globe, ShoppingCart, Code2, Zap, Users } from 'lucide-react';
+import { Bot, Globe, ShoppingCart, Code2, Zap, Users, ArrowRight, CheckCircle } from 'lucide-react';
 
 const Services = () => {
   const services = [
     {
       icon: Bot,
-      title: 'Discord Bots & Automation',
+      title: 'Automation & Bots',
       description: 'Custom Discord bots, web scrapers, and automation scripts to streamline your workflow.',
-      features: ['Custom Discord Bots', 'Web Scraping Tools', 'Automation Scripts', 'API Integrations'],
-      color: 'from-blue-500 to-cyan-500',
-      bgColor: 'bg-blue-50',
+      features: ['Discord Bot Development', 'Web Scraping Tools', 'Process Automation', 'API Integrations'],
+      gradient: 'gradient-bg-1',
+      price: '$11',
+      accent: 'text-blue-400'
     },
     {
       icon: Globe,
-      title: 'WordPress Development',
-      description: 'Professional WordPress websites with custom themes and functionality tailored to your needs.',
-      features: ['Custom WordPress Sites', 'Theme Modifications', 'Plugin Development', 'SEO Optimization'],
-      color: 'from-green-500 to-emerald-500',
-      bgColor: 'bg-green-50',
+      title: 'WordPress Solutions',
+      description: 'Professional WordPress websites with custom themes and functionality.',
+      features: ['Custom WordPress Sites', 'Theme Development', 'Plugin Integration', 'SEO Optimization'],
+      gradient: 'gradient-bg-2',
+      price: '$22',
+      accent: 'text-pink-400'
     },
     {
       icon: ShoppingCart,
-      title: 'E-commerce Solutions',
-      description: 'Complete e-commerce stores on Wix, Shopify, and WooCommerce platforms.',
-      features: ['Shopify Stores', 'WooCommerce Sites', 'Wix E-commerce', 'Payment Integration'],
-      color: 'from-purple-500 to-pink-500',
-      bgColor: 'bg-purple-50',
+      title: 'E-commerce Stores',
+      description: 'Complete online stores on Shopify, WooCommerce, and other platforms.',
+      features: ['Shopify Development', 'WooCommerce Setup', 'Payment Integration', 'Inventory Management'],
+      gradient: 'gradient-bg-3',
+      price: '$33',
+      accent: 'text-cyan-400'
     },
     {
       icon: Code2,
       title: 'Custom Development',
-      description: 'Fully custom web applications built with Next.js, React.js, and modern technologies.',
-      features: ['Next.js Applications', 'React.js Development', 'Custom UI/UX', 'Performance Optimization'],
-      color: 'from-orange-500 to-red-500',
-      bgColor: 'bg-orange-50',
+      description: 'Full-stack applications built with modern technologies like Next.js and React.',
+      features: ['Next.js Applications', 'React Development', 'Database Design', 'Cloud Deployment'],
+      gradient: 'gradient-bg-4',
+      price: '$88',
+      accent: 'text-green-400'
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
-  };
-
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="py-12 sm:py-16 lg:py-20 bg-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -69,118 +52,123 @@ const Services = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Our Services
+          <div className="inline-flex items-center space-x-2 bg-blue-500/20 backdrop-blur-sm border border-blue-400/30 text-blue-300 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium mb-4">
+            <Zap className="w-3 sm:w-4 h-3 sm:h-4" />
+            <span>Our Services</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-white">
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+              What We Build
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We offer comprehensive web development solutions to bring your digital vision to life. 
-            From simple automation to complex custom applications.
+          <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto px-4 sm:px-0">
+            From simple automation to complex enterprise solutions, we deliver 
+            exceptional digital experiences that drive results.
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8"
-        >
-          {services.map((service) => (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
+          {services.map((service, index) => (
             <motion.div
               key={service.title}
-              variants={itemVariants}
-              whileHover={{ y: -10 }}
-              className={`${service.bgColor} rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 sm:p-8"
             >
-              <div className="flex items-center mb-6">
-                <div className={`bg-gradient-to-r ${service.color} p-3 rounded-xl`}>
-                  <service.icon className="w-8 h-8 text-white" />
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6">
+                <div className="flex items-center space-x-3 sm:space-x-4 mb-3 sm:mb-0">
+                  <div className={`w-10 sm:w-12 h-10 sm:h-12 ${service.gradient} rounded-2xl flex items-center justify-center`}>
+                    <service.icon className="w-5 sm:w-6 h-5 sm:h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white">{service.title}</h3>
+                    <div className={`inline-flex items-center bg-green-500/20 border border-green-400/30 ${service.accent} px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold mt-1`}>
+                      Starting at {service.price}
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold ml-4 text-gray-800">{service.title}</h3>
               </div>
               
-              <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
+              <p className="text-gray-300 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
+                {service.description}
+              </p>
               
-              <ul className="space-y-3">
-                {service.features.map((feature, featureIndex) => (
-                  <motion.li
-                    key={feature}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: featureIndex * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center space-x-3"
-                  >
-                    <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color}`} />
-                    <span className="text-gray-700">{feature}</span>
-                  </motion.li>
+              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
+                {service.features.map((feature) => (
+                  <div key={feature} className="flex items-center space-x-3">
+                    <CheckCircle className="w-4 sm:w-5 h-4 sm:h-5 text-green-400 flex-shrink-0" />
+                    <span className="text-gray-300 text-sm sm:text-base">{feature}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
               
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`mt-6 bg-gradient-to-r ${service.color} text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-shadow duration-300`}
-              >
-                Learn More
-              </motion.button>
+              <div className="flex justify-end">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`${service.gradient} text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-2`}
+                >
+                  <span>Learn More</span>
+                  <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4" />
+                </motion.button>
+              </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Stats Section */}
+        {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mt-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white"
+          className="gradient-bg-1 rounded-2xl text-white shadow-2xl p-8 sm:p-12 text-center"
         >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <motion.div
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                <Users className="w-12 h-12 mx-auto mb-4" />
-                <h4 className="text-3xl font-bold mb-2">500+</h4>
-                <p className="text-blue-100">Happy Clients</p>
-              </motion.div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
+            <div className="text-center">
+              <div className="flex justify-center mb-3 sm:mb-4">
+                <Users className="w-10 sm:w-12 h-10 sm:h-12" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold mb-2">500+</div>
+              <div className="text-white/80 text-sm sm:text-base">Happy Clients</div>
             </div>
             
-            <div>
-              <motion.div
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                <Zap className="w-12 h-12 mx-auto mb-4" />
-                <h4 className="text-3xl font-bold mb-2">1000+</h4>
-                <p className="text-blue-100">Projects Completed</p>
-              </motion.div>
+            <div className="text-center">
+              <div className="flex justify-center mb-3 sm:mb-4">
+                <Zap className="w-10 sm:w-12 h-10 sm:h-12" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold mb-2">1000+</div>
+              <div className="text-white/80 text-sm sm:text-base">Projects</div>
             </div>
             
-            <div>
-              <motion.div
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <Globe className="w-12 h-12 mx-auto mb-4" />
-                <h4 className="text-3xl font-bold mb-2">24/7</h4>
-                <p className="text-blue-100">Support Available</p>
-              </motion.div>
+            <div className="text-center">
+              <div className="flex justify-center mb-3 sm:mb-4">
+                <Globe className="w-10 sm:w-12 h-10 sm:h-12" />
+              </div>
+              <div className="text-2xl sm:text-3xl font-bold mb-2">24/7</div>
+              <div className="text-white/80 text-sm sm:text-base">Support</div>
             </div>
           </div>
+          
+          <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Ready to Start Your Project?</h3>
+          <p className="text-lg sm:text-xl text-white/90 mb-6 sm:mb-8 max-w-2xl mx-auto px-4 sm:px-0">
+            Join hundreds of satisfied clients who trust us with their digital transformation.
+          </p>
+          
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 flex items-center space-x-2 mx-auto"
+          >
+            <span>Get Free Consultation</span>
+            <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />
+          </motion.button>
         </motion.div>
       </div>
     </section>
