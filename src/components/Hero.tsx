@@ -30,6 +30,7 @@ const Hero = () => {
         />
       </div>
 
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-6xl relative z-10">
         <div className="max-w-5xl mx-auto">
           {/* Badge */}
