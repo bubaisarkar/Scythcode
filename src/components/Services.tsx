@@ -1,174 +1,201 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Bot, Globe, ShoppingCart, Code2, Zap, Users, ArrowRight, CheckCircle } from 'lucide-react';
+import { Code2, Database, Shield, Zap, Globe, Sparkles, ArrowRight } from 'lucide-react';
 
 const Services = () => {
-  const services = [
-    {
-      icon: Bot,
-      title: 'Automation & Bots',
-      description: 'Custom Discord bots, web scrapers, and automation scripts to streamline your workflow.',
-      features: ['Discord Bot Development', 'Web Scraping Tools', 'Process Automation', 'API Integrations'],
-      gradient: 'gradient-bg-1',
-      price: '$11',
-      accent: 'text-blue-400'
-    },
-    {
-      icon: Globe,
-      title: 'WordPress Solutions',
-      description: 'Professional WordPress websites with custom themes and functionality.',
-      features: ['Custom WordPress Sites', 'Theme Development', 'Plugin Integration', 'SEO Optimization'],
-      gradient: 'gradient-bg-2',
-      price: '$22',
-      accent: 'text-pink-400'
-    },
-    {
-      icon: ShoppingCart,
-      title: 'E-commerce Stores',
-      description: 'Complete online stores on Shopify, WooCommerce, and other platforms.',
-      features: ['Shopify Development', 'WooCommerce Setup', 'Payment Integration', 'Inventory Management'],
-      gradient: 'gradient-bg-3',
-      price: '$33',
-      accent: 'text-cyan-400'
-    },
-    {
-      icon: Code2,
-      title: 'Custom Development',
-      description: 'Full-stack applications built with modern technologies like Next.js and React.',
-      features: ['Next.js Applications', 'React Development', 'Database Design', 'Cloud Deployment'],
-      gradient: 'gradient-bg-4',
-      price: '$88',
-      accent: 'text-green-400'
-    },
-  ];
-
   return (
-    <section id="services" className="py-12 sm:py-16 lg:py-20 bg-gray-900">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="services" className="py-20 bg-gray-900 relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-12 sm:mb-16"
+          className="text-center mb-16"
         >
-          <div className="inline-flex items-center space-x-2 bg-blue-500/20 backdrop-blur-sm border border-blue-400/30 text-blue-300 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium mb-4">
-            <Zap className="w-3 sm:w-4 h-3 sm:h-4" />
-            <span>Our Services</span>
+          <div className="inline-flex items-center space-x-2 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Sparkles className="w-4 h-4" />
+            <span>What We Do</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-white">
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-              What We Build
-            </span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            Our Services
           </h2>
-          <p className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto px-4 sm:px-0">
-            From simple automation to complex enterprise solutions, we deliver 
-            exceptional digital experiences that drive results.
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            Professional development services tailored to your needs
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
-          {services.map((service, index) => (
+        {/* Bento Grid Layout */}
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            
+            {/* Large Feature - Web Applications */}
             <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              whileHover={{ y: -5 }}
-              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 p-6 sm:p-8"
+              className="lg:col-span-2 lg:row-span-2 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-3xl p-8 relative overflow-hidden group hover:border-cyan-500/40 transition-all duration-300"
             >
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6">
-                <div className="flex items-center space-x-3 sm:space-x-4 mb-3 sm:mb-0">
-                  <div className={`w-10 sm:w-12 h-10 sm:h-12 ${service.gradient} rounded-2xl flex items-center justify-center`}>
-                    <service.icon className="w-5 sm:w-6 h-5 sm:h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white">{service.title}</h3>
-                    <div className={`inline-flex items-center bg-green-500/20 border border-green-400/30 ${service.accent} px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold mt-1`}>
-                      Starting at {service.price}
-                    </div>
-                  </div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl group-hover:bg-cyan-500/10 transition-all duration-500"></div>
+              <div className="relative z-10">
+                <div className="w-16 h-16 bg-cyan-500/20 rounded-2xl flex items-center justify-center mb-6">
+                  <Code2 className="w-8 h-8 text-cyan-400" />
                 </div>
-              </div>
-              
-              <p className="text-gray-300 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
-                {service.description}
-              </p>
-              
-              <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
-                {service.features.map((feature) => (
-                  <div key={feature} className="flex items-center space-x-3">
-                    <CheckCircle className="w-4 sm:w-5 h-4 sm:h-5 text-green-400 flex-shrink-0" />
-                    <span className="text-gray-300 text-sm sm:text-base">{feature}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="flex justify-end">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`${service.gradient} text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-2`}
-                >
-                  <span>Learn More</span>
-                  <ArrowRight className="w-3 sm:w-4 h-3 sm:h-4" />
-                </motion.button>
+                <h3 className="text-3xl font-bold text-white mb-4">Web Applications</h3>
+                <p className="text-gray-400 text-lg mb-6">
+                  Custom web apps built with Next.js, React, and modern frameworks. Responsive, fast, and scalable solutions.
+                </p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 rounded-full text-sm">Next.js</span>
+                  <span className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 rounded-full text-sm">React</span>
+                  <span className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 rounded-full text-sm">TypeScript</span>
+                  <span className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 rounded-full text-sm">Tailwind</span>
+                </div>
+                <a href="/start-project" className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300">
+                  <span>Get Started</span>
+                  <ArrowRight className="w-5 h-5" />
+                </a>
               </div>
             </motion.div>
-          ))}
+
+            {/* Database Solutions */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-3xl p-6 hover:border-purple-500/40 transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center mb-4">
+                <Database className="w-6 h-6 text-purple-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Database Solutions</h3>
+              <p className="text-gray-400 text-sm mb-4">Secure and scalable database architecture</p>
+              <a href="/start-project" className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 font-medium text-sm group-hover:gap-3 transition-all">
+                <span>Learn more</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </motion.div>
+
+            {/* Authentication */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-3xl p-6 hover:border-green-500/40 transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center mb-4">
+                <Shield className="w-6 h-6 text-green-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Authentication</h3>
+              <p className="text-gray-400 text-sm mb-4">OAuth 2.0 and secure auth systems</p>
+              <a href="/start-project" className="inline-flex items-center gap-2 text-green-400 hover:text-green-300 font-medium text-sm group-hover:gap-3 transition-all">
+                <span>Learn more</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </motion.div>
+
+            {/* E-commerce */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="md:col-span-2 lg:col-span-1 bg-gradient-to-br from-orange-500/10 to-red-500/10 border border-orange-500/20 rounded-3xl p-6 hover:border-orange-500/40 transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 bg-orange-500/20 rounded-xl flex items-center justify-center mb-4">
+                <Globe className="w-6 h-6 text-orange-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">E-commerce Platforms</h3>
+              <p className="text-gray-400 text-sm mb-4">Complete online stores with payment gateways and inventory management</p>
+              <a href="/start-project" className="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 font-medium text-sm group-hover:gap-3 transition-all">
+                <span>Learn more</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </motion.div>
+
+            {/* API Development */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-3xl p-6 hover:border-yellow-500/40 transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center mb-4">
+                <Zap className="w-6 h-6 text-yellow-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">API Development</h3>
+              <p className="text-gray-400 text-sm mb-4">RESTful and GraphQL APIs</p>
+              <a href="/start-project" className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 font-medium text-sm group-hover:gap-3 transition-all">
+                <span>Learn more</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </motion.div>
+
+            {/* Enterprise Solutions */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-3xl p-6 hover:border-indigo-500/40 transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center mb-4">
+                <Sparkles className="w-6 h-6 text-indigo-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3">Enterprise Solutions</h3>
+              <p className="text-gray-400 text-sm mb-4">Scalable systems for businesses</p>
+              <a href="/start-project" className="inline-flex items-center gap-2 text-indigo-400 hover:text-indigo-300 font-medium text-sm group-hover:gap-3 transition-all">
+                <span>Learn more</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </motion.div>
+
+          </div>
         </div>
 
-        {/* CTA Section */}
+        {/* Bottom CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="gradient-bg-1 rounded-2xl text-white shadow-2xl p-8 sm:p-12 text-center"
+          className="mt-16 max-w-4xl mx-auto"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
-            <div className="text-center">
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <Users className="w-10 sm:w-12 h-10 sm:h-12" />
-              </div>
-              <div className="text-2xl sm:text-3xl font-bold mb-2">500+</div>
-              <div className="text-white/80 text-sm sm:text-base">Happy Clients</div>
-            </div>
-            
-            <div className="text-center">
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <Zap className="w-10 sm:w-12 h-10 sm:h-12" />
-              </div>
-              <div className="text-2xl sm:text-3xl font-bold mb-2">1000+</div>
-              <div className="text-white/80 text-sm sm:text-base">Projects</div>
-            </div>
-            
-            <div className="text-center">
-              <div className="flex justify-center mb-3 sm:mb-4">
-                <Globe className="w-10 sm:w-12 h-10 sm:h-12" />
-              </div>
-              <div className="text-2xl sm:text-3xl font-bold mb-2">24/7</div>
-              <div className="text-white/80 text-sm sm:text-base">Support</div>
+          <div className="bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 border border-gray-700/50 rounded-3xl p-8 md:p-12 text-center">
+            <h3 className="text-3xl font-bold text-white mb-4">
+              Need Something Custom?
+            </h3>
+            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+              Every project is unique. Let's discuss your specific requirements and build something amazing together.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="/start-project"
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 inline-flex items-center justify-center gap-2"
+              >
+                <span>Start Your Project</span>
+                <ArrowRight className="w-5 h-5" />
+              </a>
+              <a
+                href="#contact"
+                className="bg-gray-800 border border-gray-700 text-white px-8 py-4 rounded-xl font-semibold hover:bg-gray-700 transition-all duration-300"
+              >
+                Contact Us
+              </a>
             </div>
           </div>
-          
-          <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Ready to Start Your Project?</h3>
-          <p className="text-lg sm:text-xl text-white/90 mb-6 sm:mb-8 max-w-2xl mx-auto px-4 sm:px-0">
-            Join hundreds of satisfied clients who trust us with their digital transformation.
-          </p>
-          
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 flex items-center space-x-2 mx-auto"
-          >
-            <span>Get Free Consultation</span>
-            <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />
-          </motion.button>
         </motion.div>
       </div>
     </section>

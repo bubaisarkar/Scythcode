@@ -1,187 +1,220 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Award, Users, Clock, Target, CheckCircle, Star, Rocket } from 'lucide-react';
+import { Award, Users, Target, Zap, Code, Rocket, ArrowRight, Sparkles } from 'lucide-react';
 
 const About = () => {
   const stats = [
-    { icon: Users, number: '500+', label: 'Happy Clients', gradient: 'gradient-bg-1' },
-    { icon: CheckCircle, number: '1000+', label: 'Projects Completed', gradient: 'gradient-bg-2' },
-    { icon: Award, number: '5+', label: 'Years Experience', gradient: 'gradient-bg-3' },
-    { icon: Star, number: '4.9/5', label: 'Client Rating', gradient: 'gradient-bg-4' },
+    { number: '500+', label: 'Happy Clients', color: 'text-cyan-400' },
+    { number: '1000+', label: 'Projects', color: 'text-purple-400' },
+    { number: '5+', label: 'Years', color: 'text-green-400' },
+    { number: '24/7', label: 'Support', color: 'text-orange-400' },
   ];
 
-  const values = [
+  const features = [
+    {
+      icon: Zap,
+      title: 'Lightning Fast',
+      description: 'Optimized performance and quick turnaround times',
+      gradient: 'from-yellow-500 to-orange-500'
+    },
+    {
+      icon: Code,
+      title: 'Clean Code',
+      description: 'Maintainable, scalable, and well-documented',
+      gradient: 'from-cyan-500 to-blue-500'
+    },
     {
       icon: Target,
-      title: 'Quality First',
-      description: 'We never compromise on quality. Every project is built with attention to detail and best practices.',
-      gradient: 'gradient-bg-1',
+      title: 'Goal Oriented',
+      description: 'Focused on delivering results that matter',
+      gradient: 'from-green-500 to-emerald-500'
     },
     {
-      icon: Clock,
-      title: 'On-Time Delivery',
-      description: 'We respect your time and deadlines. Our projects are delivered on schedule, every time.',
-      gradient: 'gradient-bg-2',
-    },
-    {
-      icon: Users,
-      title: 'Client-Focused',
-      description: 'Your success is our success. We work closely with you to understand and exceed your expectations.',
-      gradient: 'gradient-bg-3',
-    },
-  ];
-
-  const technologies = [
-    { name: 'Next.js', icon: '⚡' },
-    { name: 'React', icon: '⚛️' },
-    { name: 'TypeScript', icon: '📘' },
-    { name: 'Node.js', icon: '🟢' },
-    { name: 'Python', icon: '🐍' },
-    { name: 'WordPress', icon: '📝' },
-    { name: 'Shopify', icon: '🛒' },
-    { name: 'AWS', icon: '☁️' },
+      icon: Award,
+      title: 'Quality Assured',
+      description: 'Rigorous testing and quality control',
+      gradient: 'from-purple-500 to-pink-500'
+    }
   ];
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-20 bg-gray-900 relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center space-x-2 bg-orange-500/20 backdrop-blur-sm border border-orange-400/30 text-orange-300 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            <Rocket className="w-4 h-4" />
+          <div className="inline-flex items-center space-x-2 bg-purple-500/10 border border-purple-500/20 text-purple-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Sparkles className="w-4 h-4" />
             <span>About Us</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Meet Medusa
-            </span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
+            Building Digital Excellence
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            We&apos;re a team of passionate developers dedicated to creating exceptional digital experiences. 
-            From simple automation to complex web applications, we bring your ideas to life.
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            We transform ideas into powerful digital solutions with cutting-edge technology and creative expertise
           </p>
         </motion.div>
 
-        {/* Stats Section */}
+        {/* Stats Bar */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20"
+          className="max-w-5xl mx-auto mb-20"
         >
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
-              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300"
-            >
-              <div className="flex flex-col items-center justify-center text-center p-4 sm:p-6">
-                <div className={`w-12 sm:w-16 h-12 sm:h-16 ${stat.gradient} rounded-2xl flex items-center justify-center mb-3 sm:mb-4`}>
-                  <stat.icon className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-bold text-cyan-400 mb-2">{stat.number}</h3>
-                <p className="text-gray-300 font-medium text-sm sm:text-base">{stat.label}</p>
-              </div>
-            </motion.div>
-          ))}
+          <div className="bg-gray-800/40 border border-gray-700/50 rounded-3xl p-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="text-center"
+                >
+                  <div className={`text-4xl md:text-5xl font-bold ${stat.color} mb-2`}>
+                    {stat.number}
+                  </div>
+                  <div className="text-gray-400 text-sm md:text-base">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </motion.div>
 
-        {/* Story Section */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-center mb-20">
+        {/* Main Content - Split Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+          {/* Left Side - Story */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
+            className="space-y-6"
           >
-            <h3 className="text-3xl font-bold text-white mb-6">Our Story</h3>
-            <div className="space-y-6 text-gray-300 leading-relaxed">
+            <div className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 px-4 py-2 rounded-full text-sm font-medium">
+              <Rocket className="w-4 h-4" />
+              <span>Our Mission</span>
+            </div>
+            
+            <h3 className="text-3xl md:text-4xl font-bold text-white">
+              Empowering businesses through technology
+            </h3>
+            
+            <div className="space-y-4 text-gray-400 leading-relaxed">
               <p>
-                Founded with a mission to make professional web development accessible to everyone, 
-                Medusa has grown from a small team of developers to a trusted partner for businesses 
-                of all sizes.
+                At Scythcode, we're passionate about creating digital solutions that make a real impact. 
+                Our team of expert developers combines technical excellence with creative problem-solving 
+                to deliver projects that exceed expectations.
               </p>
               <p>
-                We believe that great software should be both powerful and user-friendly. That&apos;s why we 
-                focus on creating solutions that not only meet your technical requirements but also 
-                provide an exceptional user experience.
+                From startups to enterprises, we've helped hundreds of clients transform their ideas into 
+                successful digital products. We don't just write code – we build partnerships and create 
+                solutions that drive growth.
               </p>
-              <p>
-                Whether you need a simple Discord bot or a complex e-commerce platform, we have the 
-                expertise and passion to bring your vision to life.
-              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <a
+                href="/start-project"
+                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300"
+              >
+                <span>Start Your Project</span>
+                <ArrowRight className="w-5 h-5" />
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center gap-2 bg-gray-800 border border-gray-700 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-700 transition-all duration-300"
+              >
+                <span>Get in Touch</span>
+              </a>
             </div>
           </motion.div>
 
+          {/* Right Side - Features Grid */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           >
-            <div className="p-8">
-              <h4 className="text-2xl font-bold text-white mb-6">Why Choose Us?</h4>
-              <div className="space-y-4">
-                {[
-                  'Expert developers with 5+ years experience',
-                  'Transparent pricing with no hidden costs',
-                  'Fast turnaround times without compromising quality',
-                  'Ongoing support and maintenance',
-                  'Modern technologies and best practices',
-                  '100% satisfaction guarantee'
-                ].map((item, index) => (
-                  <motion.div
-                    key={item}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-center space-x-3"
-                  >
-                    <div className="flex-shrink-0">
-                      <CheckCircle className="w-5 h-5 text-green-500" />
-                    </div>
-                    <span className="text-gray-300">{item}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-gray-800/40 border border-gray-700/50 rounded-2xl p-6 hover:bg-gray-800/60 hover:border-gray-600 transition-all duration-300 group"
+              >
+                <div className={`w-12 h-12 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <feature.icon className="w-6 h-6 text-white" />
+                </div>
+                <h4 className="text-lg font-bold text-white mb-2">{feature.title}</h4>
+                <p className="text-sm text-gray-400">{feature.description}</p>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
 
-        {/* Technologies Section */}
+        {/* Tech Stack */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="max-w-5xl mx-auto"
         >
-          <h3 className="text-3xl font-bold text-white mb-6">Technologies We Use</h3>
-          <p className="text-gray-300 max-w-2xl mx-auto mb-8">
-            We work with cutting-edge technologies to deliver modern, scalable solutions.
-          </p>
-          
+          <div className="text-center mb-8">
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+              Technologies We Use
+            </h3>
+            <p className="text-gray-400">
+              We work with cutting-edge technologies to deliver modern, scalable solutions
+            </p>
+          </div>
+
           <div className="flex flex-wrap justify-center gap-4">
-            {technologies.map((tech, index) => (
+            {[
+              { name: 'Next.js', icon: '⚡' },
+              { name: 'React', icon: '⚛️' },
+              { name: 'JavaScript', icon: '💛' },
+              { name: 'TypeScript', icon: '📘' },
+              { name: 'Python', icon: '🐍' },
+              { name: 'PHP', icon: '🐘' },
+              { name: 'C#', icon: '💜' },
+              { name: 'Node.js', icon: '🟢' },
+              { name: 'Rust', icon: '🦀' },
+              { name: 'PostgreSQL', icon: '🐘' },
+              { name: 'MongoDB', icon: '🍃' },
+              { name: 'SQLite', icon: '💾' },
+              { name: 'REST', icon: '🔌' },
+              { name: 'GraphQL', icon: '◆' },
+              { name: 'Nginx', icon: '🌐' },
+              { name: 'AWS', icon: '☁️' },
+              { name: 'Docker', icon: '🐳' },
+              { name: 'Tailwind', icon: '🎨' }
+            ].map((tech, index) => (
               <motion.div
                 key={tech.name}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.1 }}
                 className="inline-flex items-center space-x-2 bg-gray-800/50 backdrop-blur-sm border border-gray-600 hover:border-cyan-400 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:shadow-lg"
@@ -192,42 +225,6 @@ const About = () => {
             ))}
           </div>
         </motion.div>
-
-        {/* Values Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h3 className="text-3xl font-bold text-white mb-6">Our Values</h3>
-          <p className="text-gray-300 max-w-2xl mx-auto mb-12">
-            These core values guide everything we do and ensure we deliver exceptional results for every client.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {values.map((value, index) => (
-            <motion.div
-              key={value.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5 }}
-              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300"
-            >
-              <div className="flex flex-col items-center justify-center text-center p-6 sm:p-8">
-                <div className={`w-12 sm:w-16 h-12 sm:h-16 ${value.gradient} rounded-2xl flex items-center justify-center mb-4 sm:mb-6`}>
-                  <value.icon className="w-6 sm:w-8 h-6 sm:h-8 text-white" />
-                </div>
-                <h4 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">{value.title}</h4>
-                <p className="text-gray-300 leading-relaxed text-sm sm:text-base">{value.description}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );

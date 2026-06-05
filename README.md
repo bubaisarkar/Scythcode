@@ -1,85 +1,100 @@
-# Medusa - Professional Web Development Services
+# Scythcode
 
-A modern, responsive Next.js website showcasing professional web development services with smooth animations and optimized performance.
+Professional Web Development Services
 
-## Features
+## 🚀 Features
 
-- **Responsive Design**: Fully responsive across all devices
-- **Smooth Animations**: Powered by Framer Motion for engaging user experience
-- **Modern UI**: Clean, professional design with Tailwind CSS
-- **SEO Optimized**: Proper meta tags and semantic HTML
-- **Performance Optimized**: Built with Next.js for fast loading times
+- **Next.js 16** - Modern React framework
+- **Firebase Authentication** - Google & GitHub OAuth
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Framer Motion** - Smooth animations
+- **Responsive Design** - Mobile-friendly UI
 
-## Services Offered
+## 🔥 Firebase Integration
 
-### Starter Package ($11)
-- Discord Bot Development
-- Basic Web Scraping
-- Simple Automation Scripts
-- API Integration
+- Google OAuth sign-in
+- GitHub OAuth sign-in
+- Protected routes
+- User dashboard
+- Profile management
 
-### Professional Package ($22)
-- Custom WordPress Development
-- Theme Customization
-- Plugin Integration
-- SEO Optimization
+## 📄 Pages
 
-### Business Package ($33)
-- Shopify Store Setup
-- WooCommerce Development
-- Wix E-commerce
-- Payment Gateway Integration
+- Home page with services & pricing
+- About page
+- Contact form
+- Live chat
+- User dashboard
+- User profile
+- Projects management
+- Privacy Policy
+- Terms & Conditions
+- Refund Policy
 
-### Enterprise Package ($88)
-- Custom Next.js Development
-- React.js Applications
-- Advanced UI/UX Design
-- Database Integration
+## 🛠️ Tech Stack
 
-## Getting Started
+- **Frontend:** Next.js, React, TypeScript
+- **Styling:** Tailwind CSS, DaisyUI
+- **Authentication:** Firebase Auth
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
 
-1. Install dependencies:
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Firebase project
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/bubaisarkar/Scythcode.git
+cd Scythcode
+```
+
+2. Install dependencies
 ```bash
 npm install
 ```
 
-2. Run the development server:
+3. Set up Firebase
+- Go to Firebase Console
+- Enable Google & GitHub authentication providers
+
+4. Start development server
 ```bash
 npm run dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000)
 
-## Technologies Used
+## 📦 Scripts
 
-- **Next.js 15** - React framework for production
-- **TypeScript** - Type-safe JavaScript
-- **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **Lucide React** - Beautiful icons
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
 
-## Project Structure
+## 🔐 Authentication
 
-```
-src/
-├── app/
-│   ├── globals.css
-│   ├── layout.tsx
-│   └── page.tsx
-└── components/
-    ├── Header.tsx
-    ├── Hero.tsx
-    ├── Services.tsx
-    ├── About.tsx
-    ├── Pricing.tsx
-    ├── Contact.tsx
-    └── Footer.tsx
-```
+The app uses Firebase Authentication with:
+- Google OAuth
+- GitHub OAuth
+- Protected routes
+- Session management
 
-## Deployment
+## 📝 License
 
-The easiest way to deploy this Next.js app is to use [Vercel](https://vercel.com/new).
+MIT License - feel free to use this project for your own purposes.
 
-## License
+## 📧 Contact
 
-This project is licensed under the MIT License.
+Email: dantethedev@gmail.com
+
+---
+
+**Built with ❤️ by Scythcode**
