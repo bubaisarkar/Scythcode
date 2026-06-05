@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminAuth } from '@/lib/firebaseAdmin';
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,6 +10,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Dynamically import to avoid build-time initialization issues
+    const { adminAuth } = await import('@/lib/firebaseAdmin');
 
     // Verify the Firebase ID token
     const decodedToken = await adminAuth.verifyIdToken(idToken);
@@ -36,3 +38,6 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
