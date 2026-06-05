@@ -43,7 +43,7 @@ export default function ProjectsPage() {
   if (!user) return null;
 
   // Sample projects data - in real app, this would come from an API
-  const projects = [
+  const projects: any[] = [
     // Empty for now - user has no projects yet
   ];
 
