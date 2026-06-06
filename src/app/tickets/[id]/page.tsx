@@ -90,13 +90,6 @@ export default function TicketDetailPage() {
       console.error('Error fetching ticket:', error);
     }
   };
-      if (data.success && data.tickets.length > 0) {
-        setTicket(data.tickets[0]);
-      }
-    } catch (error) {
-      console.error('Error fetching ticket:', error);
-    }
-  };
 
   const fetchMessages = async () => {
     try {
