@@ -10,6 +10,8 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status');
     const isAdmin = searchParams.get('admin') === 'true';
 
+    console.log('Fetching tickets with filters:', { userId, ticketNumber, status, isAdmin });
+
     const filters: any = {};
 
     if (ticketNumber) {
@@ -23,15 +25,22 @@ export async function GET(request: NextRequest) {
     }
 
     const tickets = await ticketDbAdmin.getTickets(filters);
+    
+    console.log(`Found ${tickets.length} tickets`);
 
     return NextResponse.json({
       success: true,
       tickets,
     });
   } catch (error: any) {
-    console.error('Error fetching tickets:', error);
+    console.error('❌ Error fetching tickets:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      stack: error.stack,
+    });
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: error.message || 'Failed to fetch tickets' },
       { status: 500 }
     );
   }
