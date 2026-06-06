@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Firebase
 scythcode-firebase-adminsdk-*.json
+
+# SQLite Database
+/data

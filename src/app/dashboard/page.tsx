@@ -121,17 +121,17 @@ export default function DashboardPage() {
     },
     {
       icon: FileText,
-      title: 'View Projects',
-      description: 'Manage your current projects',
-      href: '/dashboard/projects',
-      color: 'from-green-500 to-emerald-600'
+      title: 'My Tickets',
+      description: 'View and manage your support tickets',
+      href: '/tickets',
+      color: 'from-yellow-500 to-orange-600'
     },
     {
       icon: User,
       title: 'Edit Profile',
       description: 'Update your account settings',
       href: '/profile',
-      color: 'from-orange-500 to-red-600'
+      color: 'from-green-500 to-emerald-600'
     }
   ];
 

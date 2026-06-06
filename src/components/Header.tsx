@@ -108,6 +108,12 @@ const Header = () => {
                       <a href="/profile" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors">
                         Profile
                       </a>
+                      <a href="/tickets" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors">
+                        My Tickets
+                      </a>
+                      <a href="/live-chat" className="block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors">
+                        Live Chat
+                      </a>
                       <div className="border-t border-gray-700 my-1"></div>
                       <button
                         onClick={handleLogout}
@@ -198,6 +204,20 @@ const Header = () => {
                       className="block px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
                     >
                       Profile
+                    </a>
+                    <a
+                      href="/tickets"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                    >
+                      My Tickets
+                    </a>
+                    <a
+                      href="/live-chat"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="block px-4 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                    >
+                      Live Chat
                     </a>
                     <button
                       onClick={() => {
