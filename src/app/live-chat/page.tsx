@@ -38,43 +38,58 @@ const LiveChat = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Poll for new messages every 2 seconds
+  // Poll for new messages every 500ms for real-time feel
   useEffect(() => {
     if (!sessionId) return;
 
     const pollMessages = async () => {
       try {
-        const response = await fetch(`/api/chat/messages?sessionId=${sessionId}`);
+        const response = await fetch(`/api/chat/messages?sessionId=${sessionId}`, {
+          cache: 'no-store',
+        });
         const data = await response.json();
         
         if (data.success && data.messages) {
-          setMessages(data.messages.map((msg: any) => ({
+          const newMessages = data.messages.map((msg: any) => ({
             id: msg.id,
             text: msg.message,
             sender: msg.senderType,
             timestamp: new Date(msg.timestamp),
             status: 'sent',
             senderName: msg.sender,
-          })));
+          }));
+          
+          // Only update if messages changed to avoid unnecessary re-renders
+          setMessages(prev => {
+            if (JSON.stringify(prev) !== JSON.stringify(newMessages)) {
+              return newMessages;
+            }
+            return prev;
+          });
         }
       } catch (error) {
         console.error('Failed to fetch messages:', error);
       }
     };
 
+    // Initial fetch
     pollMessages();
-    const interval = setInterval(pollMessages, 2000);
+    
+    // Poll every 500ms for faster updates
+    const interval = setInterval(pollMessages, 500);
 
     return () => clearInterval(interval);
   }, [sessionId]);
 
-  // Poll for typing status
+  // Poll for typing status every 300ms for instant feedback
   useEffect(() => {
     if (!sessionId) return;
 
     const pollTyping = async () => {
       try {
-        const response = await fetch(`/api/chat/typing?sessionId=${sessionId}`);
+        const response = await fetch(`/api/chat/typing?sessionId=${sessionId}`, {
+          cache: 'no-store',
+        });
         const data = await response.json();
         
         if (data.success && data.isTyping && data.typingUser.userType !== 'user') {
@@ -84,10 +99,11 @@ const LiveChat = () => {
         }
       } catch (error) {
         console.error('Failed to fetch typing status:', error);
+        setOtherPersonTyping(false);
       }
     };
 
-    const interval = setInterval(pollTyping, 1000);
+    const interval = setInterval(pollTyping, 300);
 
     return () => clearInterval(interval);
   }, [sessionId]);

@@ -102,8 +102,8 @@ const AdminLiveChat = () => {
     // Fetch immediately
     fetchSessions();
     
-    // Then poll every 3 seconds
-    const interval = setInterval(fetchSessions, 3000);
+    // Then poll every 1 second for instant session updates
+    const interval = setInterval(fetchSessions, 1000);
 
     return () => clearInterval(interval);
   }, [isAuthenticated]);
@@ -153,8 +153,8 @@ const AdminLiveChat = () => {
     // Fetch immediately
     pollMessages();
     
-    // Then poll every 2 seconds
-    const interval = setInterval(pollMessages, 2000);
+    // Then poll every 500ms for real-time updates
+    const interval = setInterval(pollMessages, 500);
 
     return () => clearInterval(interval);
   }, [selectedSession, isJoined]);
@@ -178,7 +178,7 @@ const AdminLiveChat = () => {
       }
     };
 
-    const interval = setInterval(pollTyping, 1000);
+    const interval = setInterval(pollTyping, 300);
 
     return () => clearInterval(interval);
   }, [selectedSession, isJoined]);
