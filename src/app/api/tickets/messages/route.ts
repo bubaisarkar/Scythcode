@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ticketDb } from '@/lib/ticketDb';
+import { ticketDbAdmin } from '@/lib/ticketDbAdmin';
 
 // GET - Fetch messages for a ticket
 export async function GET(request: NextRequest) {
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const messages = await ticketDb.getMessages(ticketId);
+    const messages = await ticketDbAdmin.getMessages(ticketId);
 
     return NextResponse.json({
       success: true,
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await ticketDb.addMessage({
+    const result = await ticketDbAdmin.addMessage({
       ticketId,
       senderType,
       senderName,

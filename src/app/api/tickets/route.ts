@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ticketDb } from '@/lib/ticketDb';
+import { ticketDbAdmin } from '@/lib/ticketDbAdmin';
 
 // GET - Fetch tickets
 export async function GET(request: NextRequest) {
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       filters.status = status;
     }
 
-    const tickets = await ticketDb.getTickets(filters);
+    const tickets = await ticketDbAdmin.getTickets(filters);
 
     return NextResponse.json({
       success: true,
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = await ticketDb.createTicket({
+    const result = await ticketDbAdmin.createTicket({
       userId,
       userEmail,
       userName,
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       initialMessage: message,
     });
 
-    const ticket = await ticketDb.getTicketById(result.id);
+    const ticket = await ticketDbAdmin.getTicketById(result.id);
 
     return NextResponse.json({
       success: true,
@@ -89,7 +89,7 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const ticket = await ticketDb.updateTicketStatus(ticketId, status, closedBy);
+    const ticket = await ticketDbAdmin.updateTicketStatus(ticketId, status, closedBy);
 
     return NextResponse.json({
       success: true,
