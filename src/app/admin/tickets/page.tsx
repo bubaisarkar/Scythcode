@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 
 interface TicketType {
-  id: number;
+  id: string;
   ticket_number: string;
   user_name: string;
   user_email: string;
@@ -34,7 +34,7 @@ interface TicketType {
 }
 
 interface Message {
-  id: number;
+  id: string;
   sender_type: string;
   sender_name: string;
   message: string;

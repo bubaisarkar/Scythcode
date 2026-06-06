@@ -21,7 +21,7 @@ import {
 import Link from 'next/link';
 
 interface Message {
-  id: number;
+  id: string;
   sender_type: string;
   sender_name: string;
   message: string;
@@ -29,7 +29,7 @@ interface Message {
 }
 
 interface TicketDetail {
-  id: number;
+  id: string;
   ticket_number: string;
   subject: string;
   category: string;
@@ -76,8 +76,20 @@ export default function TicketDetailPage() {
 
   const fetchTicketDetails = async () => {
     try {
-      const response = await fetch(`/api/tickets?ticketId=${ticketId}`);
+      // Firestore uses document IDs, so we fetch by the ticket's Firestore ID
+      const response = await fetch(`/api/tickets?userId=${user?.uid}`);
       const data = await response.json();
+      if (data.success) {
+        // Find the ticket with matching ID from URL
+        const foundTicket = data.tickets.find((t: any) => t.id === ticketId);
+        if (foundTicket) {
+          setTicket(foundTicket);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching ticket:', error);
+    }
+  };
       if (data.success && data.tickets.length > 0) {
         setTicket(data.tickets[0]);
       }

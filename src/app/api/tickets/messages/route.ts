@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/ticketDb';
+import { ticketDb } from '@/lib/ticketDb';
 
 // GET - Fetch messages for a ticket
 export async function GET(request: NextRequest) {
@@ -14,11 +14,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const messages = db.prepare(`
-      SELECT * FROM ticket_messages 
-      WHERE ticket_id = ? 
-      ORDER BY created_at ASC
-    `).all(ticketId);
+    const messages = await ticketDb.getMessages(ticketId);
 
     return NextResponse.json({
       success: true,
@@ -46,23 +42,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Insert message
-    const insertMessage = db.prepare(`
-      INSERT INTO ticket_messages (ticket_id, sender_type, sender_name, sender_email, message)
-      VALUES (?, ?, ?, ?, ?)
-    `);
-
-    const result = insertMessage.run(ticketId, senderType, senderName, senderEmail, message);
-
-    // Update ticket updated_at timestamp
-    db.prepare('UPDATE tickets SET updated_at = CURRENT_TIMESTAMP WHERE id = ?').run(ticketId);
-
-    // Fetch the created message
-    const createdMessage = db.prepare('SELECT * FROM ticket_messages WHERE id = ?').get(result.lastInsertRowid);
+    const result = await ticketDb.addMessage({
+      ticketId,
+      senderType,
+      senderName,
+      senderEmail,
+      message,
+    });
 
     return NextResponse.json({
       success: true,
-      message: createdMessage,
+      message: { id: result.id },
     });
   } catch (error: any) {
     console.error('Error adding message:', error);

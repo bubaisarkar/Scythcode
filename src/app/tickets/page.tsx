@@ -20,7 +20,7 @@ import {
 import Link from 'next/link';
 
 interface TicketType {
-  id: number;
+  id: string;
   ticket_number: string;
   subject: string;
   category: string;

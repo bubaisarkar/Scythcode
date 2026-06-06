@@ -1,81 +1,197 @@
-// Ticket Database using SQLite
-import Database from 'better-sqlite3';
-import path from 'path';
-import fs from 'fs';
+// Ticket Database using Firebase Firestore (Vercel-compatible)
+import { db } from './firebase';
+import {
+  collection,
+  doc,
+  addDoc,
+  getDoc,
+  getDocs,
+  updateDoc,
+  query,
+  where,
+  orderBy,
+  serverTimestamp,
+  Timestamp,
+} from 'firebase/firestore';
 
-// Ensure data directory exists
-const dataDir = path.join(process.cwd(), 'data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+// Collections
+const TICKETS_COLLECTION = 'tickets';
+const MESSAGES_COLLECTION = 'ticket_messages';
+
+// Generate unique ticket number
+export function generateTicketNumber(): string {
+  const prefix = 'SCT';
+  const timestamp = Date.now().toString().slice(-8);
+  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  return `${prefix}-${timestamp}-${random}`;
 }
 
-const dbPath = path.join(dataDir, 'tickets.db');
-const db = new Database(dbPath);
+// Ticket operations
+export const ticketDb = {
+  // Create a new ticket
+  async createTicket(ticketData: {
+    userId: string;
+    userEmail: string;
+    userName: string;
+    subject: string;
+    category: string;
+    priority: string;
+    initialMessage: string;
+  }) {
+    const ticketNumber = generateTicketNumber();
+    
+    const ticketRef = await addDoc(collection(db, TICKETS_COLLECTION), {
+      ticket_number: ticketNumber,
+      user_id: ticketData.userId,
+      user_email: ticketData.userEmail,
+      user_name: ticketData.userName,
+      subject: ticketData.subject,
+      category: ticketData.category,
+      priority: ticketData.priority,
+      status: 'open',
+      created_at: serverTimestamp(),
+      updated_at: serverTimestamp(),
+      closed_at: null,
+    });
 
-// Enable foreign keys
-db.pragma('foreign_keys = ON');
+    // Add initial message
+    await addDoc(collection(db, MESSAGES_COLLECTION), {
+      ticket_id: ticketRef.id,
+      sender_type: 'user',
+      sender_name: ticketData.userName,
+      sender_email: ticketData.userEmail,
+      message: ticketData.initialMessage,
+      created_at: serverTimestamp(),
+    });
 
-// Initialize database tables
-export function initTicketDatabase() {
-  // Tickets table
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS tickets (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      ticket_number TEXT UNIQUE NOT NULL,
-      user_id TEXT NOT NULL,
-      user_email TEXT NOT NULL,
-      user_name TEXT NOT NULL,
-      subject TEXT NOT NULL,
-      category TEXT NOT NULL,
-      priority TEXT NOT NULL,
-      status TEXT DEFAULT 'open',
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      closed_at DATETIME
-    )
-  `);
+    return { id: ticketRef.id, ticket_number: ticketNumber };
+  },
 
-  // Ticket messages/replies table
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS ticket_messages (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      ticket_id INTEGER NOT NULL,
-      sender_type TEXT NOT NULL,
-      sender_name TEXT NOT NULL,
-      sender_email TEXT,
-      message TEXT NOT NULL,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (ticket_id) REFERENCES tickets(id) ON DELETE CASCADE
-    )
-  `);
+  // Get all tickets (with optional filters)
+  async getTickets(filters?: {
+    userId?: string;
+    status?: string;
+    ticketNumber?: string;
+  }) {
+    let q = query(collection(db, TICKETS_COLLECTION), orderBy('created_at', 'desc'));
 
-  // Ticket attachments table (for future use)
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS ticket_attachments (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      ticket_id INTEGER NOT NULL,
-      message_id INTEGER,
-      file_name TEXT NOT NULL,
-      file_path TEXT NOT NULL,
-      file_size INTEGER,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (ticket_id) REFERENCES tickets(id) ON DELETE CASCADE,
-      FOREIGN KEY (message_id) REFERENCES ticket_messages(id) ON DELETE CASCADE
-    )
-  `);
+    if (filters?.userId) {
+      q = query(
+        collection(db, TICKETS_COLLECTION),
+        where('user_id', '==', filters.userId),
+        orderBy('created_at', 'desc')
+      );
+    }
 
-  // Create indexes
-  db.exec(`
-    CREATE INDEX IF NOT EXISTS idx_tickets_user ON tickets(user_id);
-    CREATE INDEX IF NOT EXISTS idx_tickets_status ON tickets(status);
-    CREATE INDEX IF NOT EXISTS idx_tickets_number ON tickets(ticket_number);
-    CREATE INDEX IF NOT EXISTS idx_ticket_messages_ticket ON ticket_messages(ticket_id);
-  `);
+    if (filters?.status) {
+      q = query(
+        collection(db, TICKETS_COLLECTION),
+        where('status', '==', filters.status),
+        orderBy('created_at', 'desc')
+      );
+    }
 
-  console.log('✅ Ticket database initialized');
-}
+    if (filters?.ticketNumber) {
+      q = query(
+        collection(db, TICKETS_COLLECTION),
+        where('ticket_number', '==', filters.ticketNumber)
+      );
+    }
 
-// Initialize on import
-initTicketDatabase();
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      created_at: doc.data().created_at?.toDate?.()?.toISOString() || new Date().toISOString(),
+      updated_at: doc.data().updated_at?.toDate?.()?.toISOString() || new Date().toISOString(),
+    }));
+  },
 
-export { db };
+  // Get a single ticket by ID
+  async getTicketById(ticketId: string) {
+    const docRef = doc(db, TICKETS_COLLECTION, ticketId);
+    const docSnap = await getDoc(docRef);
+    
+    if (!docSnap.exists()) {
+      return null;
+    }
+
+    return {
+      id: docSnap.id,
+      ...docSnap.data(),
+      created_at: docSnap.data().created_at?.toDate?.()?.toISOString() || new Date().toISOString(),
+      updated_at: docSnap.data().updated_at?.toDate?.()?.toISOString() || new Date().toISOString(),
+    };
+  },
+
+  // Update ticket status
+  async updateTicketStatus(ticketId: string, status: string, closedBy?: string) {
+    const docRef = doc(db, TICKETS_COLLECTION, ticketId);
+    
+    const updateData: any = {
+      status,
+      updated_at: serverTimestamp(),
+    };
+
+    if (status === 'closed') {
+      updateData.closed_at = serverTimestamp();
+    }
+
+    await updateDoc(docRef, updateData);
+
+    // Add system message
+    if (closedBy) {
+      await addDoc(collection(db, MESSAGES_COLLECTION), {
+        ticket_id: ticketId,
+        sender_type: 'system',
+        sender_name: 'System',
+        message: `Ticket ${status} by ${closedBy}`,
+        created_at: serverTimestamp(),
+      });
+    }
+
+    return await this.getTicketById(ticketId);
+  },
+
+  // Get messages for a ticket
+  async getMessages(ticketId: string) {
+    const q = query(
+      collection(db, MESSAGES_COLLECTION),
+      where('ticket_id', '==', ticketId),
+      orderBy('created_at', 'asc')
+    );
+
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      created_at: doc.data().created_at?.toDate?.()?.toISOString() || new Date().toISOString(),
+    }));
+  },
+
+  // Add a message to a ticket
+  async addMessage(messageData: {
+    ticketId: string;
+    senderType: string;
+    senderName: string;
+    senderEmail?: string;
+    message: string;
+  }) {
+    const messageRef = await addDoc(collection(db, MESSAGES_COLLECTION), {
+      ticket_id: messageData.ticketId,
+      sender_type: messageData.senderType,
+      sender_name: messageData.senderName,
+      sender_email: messageData.senderEmail || null,
+      message: messageData.message,
+      created_at: serverTimestamp(),
+    });
+
+    // Update ticket's updated_at timestamp
+    const ticketRef = doc(db, TICKETS_COLLECTION, messageData.ticketId);
+    await updateDoc(ticketRef, {
+      updated_at: serverTimestamp(),
+    });
+
+    return { id: messageRef.id };
+  },
+};
