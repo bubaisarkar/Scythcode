@@ -1,0 +1,101 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions for validation
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    // Validate string length to prevent payload attacks
+    function isValidString(text, minLen, maxLen) {
+      return text is string && 
+             text.size() >= minLen && 
+             text.size() <= maxLen;
+    }
+    
+    // Validate ticket data structure
+    function isValidTicketCreate() {
+      let data = request.resource.data;
+      return data.keys().hasAll(['ticket_number', 'user_id', 'user_email', 'user_name', 
+                                  'subject', 'category', 'priority', 'status', 
+                                  'created_at', 'updated_at']) &&
+             data.user_id == request.auth.uid &&
+             isValidString(data.ticket_number, 10, 20) &&
+             isValidString(data.user_email, 5, 100) &&
+             isValidString(data.user_name, 1, 100) &&
+             isValidString(data.subject, 1, 500) &&
+             isValidString(data.category, 1, 100) &&
+             data.priority in ['low', 'medium', 'high', 'urgent'] &&
+             data.status in ['open', 'in-progress', 'resolved', 'closed'] &&
+             data.created_at is timestamp &&
+             data.updated_at is timestamp;
+    }
+    
+    // Validate message data structure
+    function isValidMessageCreate() {
+      let data = request.resource.data;
+      return data.keys().hasAll(['ticket_id', 'sender_type', 'sender_name', 
+                                  'message', 'created_at']) &&
+             isValidString(data.ticket_id, 1, 100) &&
+             data.sender_type in ['user', 'admin', 'system'] &&
+             isValidString(data.sender_name, 1, 100) &&
+             isValidString(data.message, 1, 5000) &&
+             data.created_at is timestamp;
+    }
+    
+    // TICKETS COLLECTION
+    match /tickets/{ticketId} {
+      // Read: Only ticket owner can read their tickets
+      allow read: if isSignedIn() && 
+                     resource.data.user_id == request.auth.uid;
+      
+      // Create: Only authenticated users can create tickets for themselves
+      allow create: if isSignedIn() && 
+                       isValidTicketCreate() &&
+                       request.resource.data.user_id == request.auth.uid;
+      
+      // Update: Only allow status and timestamp updates (no editing subject/message)
+      // Users can only update their own tickets
+      allow update: if isSignedIn() && 
+                       resource.data.user_id == request.auth.uid &&
+                       // Only allow updating specific fields
+                       request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['status', 'updated_at', 'closed_at']) &&
+                       // Status must be valid
+                       request.resource.data.status in ['open', 'in-progress', 'resolved', 'closed'] &&
+                       // Prevent changing ownership
+                       request.resource.data.user_id == resource.data.user_id;
+      
+      // Delete: Prevent deletion (tickets should never be deleted)
+      allow delete: if false;
+    }
+    
+    // TICKET MESSAGES COLLECTION
+    match /ticket_messages/{messageId} {
+      // Read: Users can read messages if they own the related ticket
+      // We'll rely on the app to filter by ticket_id
+      allow read: if isSignedIn();
+      
+      // Create: Only authenticated users can create messages
+      // Validation ensures proper structure
+      allow create: if isSignedIn() && 
+                       isValidMessageCreate();
+      
+      // Update: Messages cannot be edited once created
+      allow update: if false;
+      
+      // Delete: Messages cannot be deleted
+      allow delete: if false;
+    }
+    
+    // SECURITY: Deny all access to any other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
