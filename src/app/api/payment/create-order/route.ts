@@ -13,10 +13,29 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if Razorpay credentials are set
+    const keyId = process.env.RAZORPAY_KEY_ID;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+    if (!keyId || !keySecret) {
+      console.error('Razorpay credentials not configured:', {
+        keyIdExists: !!keyId,
+        keySecretExists: !!keySecret,
+        mode: process.env.RAZORPAY_MODE,
+      });
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Payment gateway not configured. Please contact support.' 
+        },
+        { status: 500 }
+      );
+    }
+
     // Initialize Razorpay
     const razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID || '',
-      key_secret: process.env.RAZORPAY_KEY_SECRET || '',
+      key_id: keyId,
+      key_secret: keySecret,
     });
 
     // Create order
